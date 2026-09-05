@@ -1,0 +1,9 @@
+
+model Url {
+  id        String   @id @default(uuid())
+  url       String    @unique
+  shortenedUrl String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  accessCount Int      @default(0)
+}
