@@ -1,10 +1,9 @@
 import express from "express";
+import urlRouter from "./routes/url.routes.js";
 
-export const app = express();
+const app = express();
+app.use(express.json());
 
-app.get("/health-check", (req, res) => {
-    return res.status(200).json({
-        status: "success",
-        message: "Health check passed",
-    });
-});
+app.use('/', urlRouter);
+
+export default app;

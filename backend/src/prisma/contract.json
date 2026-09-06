@@ -150,11 +150,6 @@
                   "columns": [
                     "url"
                   ]
-                },
-                {
-                  "columns": [
-                    "shortenedUrl"
-                  ]
                 }
               ]
             }
@@ -164,7 +159,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "eab9729501fa3e8eb38a177f8cef58ece0a1b0385a953dd241a2204e6a9a1cc4"
+    "storageHash": "6fb5735840c95887bbfddfac00311d975864fd8937c7df9a1dde385a8946197c"
   },
   "execution": {
     "executionHash": "6cc0fabe0a373a59d3eb55a36aca89fb3a8b616b101294b6d66d8cba3ca04bf3",

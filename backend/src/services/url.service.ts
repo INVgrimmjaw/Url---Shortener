@@ -1,23 +1,36 @@
 import shortenUrl from "shorten-url";
 import { db } from "../prisma/db.js";
 
-export async function shortenUrlService(url: string): Promise<string> {
+export async function shortenUrlService(url: string): Promise<{
+  id: string;
+  url: string;
+  shortenedUrl: string;
+  createdAt: Date;
+  updatedAt: Date;
+  accessCount: number;
+}> {
   const shortenedUrl = await shortenUrl(url, 30);
 
-  await db.orm.public.Url.
+  const urlRecord = await db.orm.public.Url.
     create({
       url: url,
       shortenedUrl: shortenedUrl,
     });
-
-  return shortenedUrl;
+  return {
+    id: urlRecord.id,
+    url: urlRecord.url,
+    shortenedUrl: urlRecord.shortenedUrl,
+    createdAt: urlRecord.createdAt,
+    updatedAt: urlRecord.updatedAt,
+    accessCount: urlRecord.accessCount,
+  }
 }
 
 export async function geturlRecordfromshortenedUrl(shortenedUrl: string) {
   return db.orm.public.Url.
     where({
       shortenedUrl: shortenedUrl,
-    });
+    }).first();
 }
 
 export async function geturlRecordfromOriginalUrl(originalUrl: string) {
@@ -27,20 +40,21 @@ export async function geturlRecordfromOriginalUrl(originalUrl: string) {
     });
 }
 
-export async function incrementAccessCount(shortenedUrl: string): Promise<void> {
+export async function incrementAccessCount(url: string): Promise<void> {
   const urlRecord = await db.orm.public.Url
     .where({
-      shortenedUrl,
+      url,
     })
     .first();
 
   if (!urlRecord) {
+    console.log(`URL record not found for URL: ${url}`);
     return;
   }
 
   await db.orm.public.Url
     .where({
-      shortenedUrl,
+      url: urlRecord.url,
     })
     .update({
       accessCount: urlRecord.accessCount + 1,

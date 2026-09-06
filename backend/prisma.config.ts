@@ -3,7 +3,7 @@ import { definePrismaConfig } from '@prisma/cli-engine';
 import { defineConfig as ormConfig } from '@prisma/orm-postgres/config';
 
 dotenv.config({
-  path: "./src/.env",
+  path: ".env",
 });
 
 export default definePrismaConfig({
